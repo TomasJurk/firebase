@@ -4,5 +4,13 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyCPHVMuCkzr4xtzeUdL9vCCvIWmLXHSb8c',
+    authDomain: 'insta-95872.firebaseapp.com',
+    databaseURL: 'https://insta-95872.firebaseio.com',
+    projectId: 'insta-95872',
+    storageBucket: 'insta-95872.appspot.com',
+    messagingSenderId: '627452106096'
+  }
 };
