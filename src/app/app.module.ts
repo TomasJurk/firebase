@@ -21,20 +21,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Services
 import { AuthService } from './core/auth.service';
+import { AuthGuard } from './core/auth.guard';
 
 // Components
 import { HomepageComponent } from './homepage/homepage.component';
-import { AuthComponent } from './auth/auth.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NavbarComponent } from './ui/navbar/navbar.component';
+import { LoginComponent } from './auth/login/login.component';
+import { RegisterComponent } from './auth/register/register.component';
+import { ProfileComponent } from './profile/profile.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
-    AuthComponent,
     DashboardComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +60,7 @@ import { NavbarComponent } from './ui/navbar/navbar.component';
     AngularFireAuthModule
 
   ],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,31 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../core/auth.service';
+import { AuthService } from '../../core/auth.service';
 
-type UserFields = 'name' | 'email' | 'password';
+type UserFields = 'email' | 'password';
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
-export class AuthComponent implements OnInit {
+
+export class LoginComponent implements OnInit {
 
   userForm: FormGroup;
   formErrors: FormErrors = {
-    'name': '',
     'email': '',
     'password': ''
   };
+
   validationMessage = {
     'email': {
       'required': 'Email is required',
       'email': 'Email must be valid'
-    },
-    'name': {
-      'required': 'Name is required',
-      'minlength': 'Name must be at least 3 char long.'
     },
     'password': {
       'required': 'Password is required',
@@ -37,7 +35,8 @@ export class AuthComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private _aS: AuthService
+    private _aS: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -47,10 +46,6 @@ export class AuthComponent implements OnInit {
   buildForm() {
     this.userForm = this.formBuilder.group(
       {
-        'name': ['', [
-          Validators.required,
-          Validators.minLength(3)
-        ]],
         'email': ['', [
           Validators.required,
           Validators.email
@@ -92,8 +87,11 @@ export class AuthComponent implements OnInit {
     }
   }
 
-  signUp() {
-    this._aS.emailSignUp(this.userForm.value['email'], this.userForm.value['name'], this.userForm.value['password']);
+  signIn() {
+    this._aS.emailSignIn(this.userForm.value['email'], this.userForm.value['password'])
+    .then(
+      user => this.router.navigate(['/dashboard'])
+    );
   }
 
 }

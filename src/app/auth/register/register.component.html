@@ -1,6 +1,8 @@
 <mat-card class="auth-form">
+
   <div class="sing-in-form">
-    <h1>Sing In</h1>
+    <h1>Sing Up</h1>
+    <button type="button" name="button" [routerLink]="['../', 'sign-in']" mat-button>Already has an account? Sing In</button>
     <form [formGroup]="userForm" (ngSubmit)="signUp()">
       <mat-form-field class="full-width">
         <input matInput type="text" formControlName="name" placeholder="name" required>
@@ -23,4 +25,5 @@
       <button type="submit" [disabled]="!userForm.valid" mat-button>SUBMIT</button>
     </form>
   </div>
+
 </mat-card>

@@ -1,8 +1,12 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span routerLink="/">Third Line</span>
+    <span routerLink="/" *ngIf="!(auth.user | async)">Third Line</span>
+    <span routerLink="/dashboard" *ngIf="(auth.user | async)">Dashback</span>
     <span class="spacer"></span>
-    <mat-icon [routerLink]="['auth']" class="a-icon">favorite</mat-icon>
-    <mat-icon class="icon">delete</mat-icon>
+    <mat-icon [routerLink]="['post']" class="a-icon" *ngIf="(auth.user | async)">add</mat-icon>
+    <mat-icon [routerLink]="['sign-in']" class="a-icon" *ngIf="!(auth.user | async)">fingerprint</mat-icon>
+    <mat-icon [routerLink]="['sign-up']" class="a-icon" *ngIf="!(auth.user | async)">motorcycle</mat-icon>
+    <span routerLink="profile" *ngIf="(auth.user | async)" >{{(auth.user | async)?.displayName}}</span>
+    <mat-icon (click)="signOut()" class="a-icon" *ngIf="(auth.user | async)">power_settings_new</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>
