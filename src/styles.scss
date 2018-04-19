@@ -25,3 +25,8 @@ body {
 .sm-text {
   font-size: 10px;
 }
+
+#hidden-from-screen {
+  opacity: 0;
+  width: 0;
+}

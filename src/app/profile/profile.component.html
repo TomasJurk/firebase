@@ -1,3 +1,31 @@
-<p>
-  profile works!
-</p>
+<mat-card class="profile-container">
+  <div class="profile-picture">
+    <img *ngIf="user" src="{{ user.photoURL }}" alt="">
+    <img *ngIf="!user" src="https://cdn-images-1.medium.com/max/1600/1*l9eqA179Bw1QoMA8iwBvHw.png" alt="">
+    <button (click)="fileUpload.click()" type="button" name="button" mat-button>Change pic</button>
+    <input #fileUpload (change)="detectFile($event)" id="hidden-from-screen" type="file" name="" value="">
+  </div>
+
+  <div class="profile-name">
+
+    <div class="change-name" *ngIf="!editable">
+      <h3>{{ user?.displayName }}</h3>
+      <button (click)="toggleName()" mat-mini-fab>
+        <mat-icon>edit</mat-icon>
+      </button>
+    </div>
+
+    <div class="input-name" *ngIf="editable">
+      <input type="text" [(ngModel)]="user.displayName" name="" value="">
+      <button (click)="saveName()" mat-mini-fab>
+        <mat-icon>done</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+</mat-card>
+
+<mat-card>
+
+</mat-card>

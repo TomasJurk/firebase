@@ -1,0 +1,13 @@
+.post-container {
+  max-width: 600px;
+  margin: 20px auto;
+
+  .upload-image {
+    background-color: #ccc;
+    border-radius: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    padding: 30px 20px;
+    cursor: pointer;
+  }
+}

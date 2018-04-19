@@ -1,3 +1,27 @@
-<p>
-  post works!
-</p>
+<mat-card class="post-container">
+
+  <mat-horizontal-stepper #stepper="matHorizontalStepper">
+    <mat-step>
+      <ng-template matStepLabel>Add photo</ng-template>
+      <div (click)="fileUpload.click()" class="upload-image">
+        <h2>Click here to upload image</h2>
+        <button color="primary" mat-mini-fab>
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <input (change)="detectFile($event)" id="hidden-from-screen" #fileUpload type="file">
+      <img *ngIf="picture" src="{{ picture?.photoURL }}" alt="">
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Fill out your address</ng-template>
+        <input matInput placeholder="Address" required>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+    </mat-step>
+  </mat-horizontal-stepper>
+
+</mat-card>

@@ -18,10 +18,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatStepperModule } from '@angular/material/stepper';
 
 // Services
 import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth.guard';
+import { PostService } from './_services/post.service';
+import { UserService } from './_services/user.service';
 
 // Components
 import { HomepageComponent } from './homepage/homepage.component';
@@ -57,10 +61,12 @@ import { PostComponent } from './post/post.component';
     FormsModule,
     ReactiveFormsModule,
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    MatTabsModule,
+    MatStepperModule
 
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, PostService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
