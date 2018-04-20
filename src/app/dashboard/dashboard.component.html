@@ -1,3 +1,8 @@
 <p>
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis culpa earum libero, sint voluptate accusamus ratione, dolores deleniti asperiores corrupti neque temporibus fuga enim recusandae magni omnis beatae facilis, voluptas sapiente ex suscipit excepturi quae! Qui rem laborum quis aspernatur odit repellendus delectus tempora, dolorem veniam nam eveniet, iusto consequatur. Eum recusandae modi quis! Distinctio saepe, asperiores reiciendis dolorum voluptate deleniti cupiditate ullam, omnis aperiam pariatur quo quae fugit facere voluptates incidunt quod at adipisci eos magnam sequi. Porro vero natus nihil deleniti, sunt incidunt autem optio quibusdam voluptatem adipisci magnam dolore assumenda, voluptate quaerat reprehenderit alias a soluta accusamus?
 </p>
+
+<div *ngFor="let post of posts | async">
+  <img src="{{post.photoURL}}" alt="">
+  <div>{{post.description}}</div>
+</div>

@@ -11,7 +11,7 @@ export class PostService {
     private afs: AngularFirestore
   ) { }
 
-  uploadPicture(upload, uid) {
+  uploadPicture(upload, id) {
     const storageRef = firebase.storage().ref();
     const imageName = new Date().getTime();
     const uploadTask = storageRef.child(`posts/${imageName}`).put(upload);
@@ -26,9 +26,12 @@ export class PostService {
       },
       () => {
         if (uploadTask.snapshot.downloadURL) {
-          upload.url = uploadTask.snapshot.downloadURL;
-         this.updatePicture(upload, uid);
-         return;
+          const newPicture = {
+            photoURL: uploadTask.snapshot.downloadURL,
+            imageName: imageName
+          };
+          this.updatePicture(newPicture, id);
+          return;
         } else {
           console.log('file not loaded');
         }
@@ -39,16 +42,41 @@ export class PostService {
   createPostPicture(uid) {
     const picture = {
       'user_uid': uid,
-      'status': 'draft'
+      'status': 'draft',
+      'photoURL': ''
     };
     return this.afs.collection('posts').add(picture);
   }
 
-  getOnePost(uid) {
-    return this.afs.doc<any>(`posts/${uid}`);
+  getOnePost(id) {
+    return this.afs.doc<any>(`posts/${id}`);
   }
 
-  private updatePicture(upload, uid) {
-    return this.getOnePost(uid).update({'photoURL': upload.url});
+  private updatePicture(upload, id) {
+    return this.getOnePost(id).update(upload);
+  }
+
+  deletePhoto(id, pictureName) {
+    return this.getOnePost(id).update({
+      'photoURL': '',
+      'imageName': ''
+    }).then(
+      () => {
+        const storageRef = firebase.storage().ref();
+        storageRef.child(`posts/${pictureName}`).delete();
+      }
+    );
+  }
+
+  addDescription(id, description) {
+    return this.getOnePost(id).update({'description': description});
+  }
+
+  addPost(id) {
+    return this.getOnePost(id).update({'status': 'active'});
+  }
+
+  getAllPosts() {
+    return this.afs.collection('posts', asd => asd.where('status', '==', 'active'));
   }
 }
