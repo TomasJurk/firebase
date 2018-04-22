@@ -76,7 +76,7 @@ export class PostService {
     return this.getOnePost(id).update({'status': 'active'});
   }
 
-  getAllPosts() {
-    return this.afs.collection('posts', asd => asd.where('status', '==', 'active'));
+  getAllPosts(id) {
+    return this.afs.collection('posts', ref => ref.where('status', '==', 'active').where('user_uid', '==', `${id}`));
   }
 }
