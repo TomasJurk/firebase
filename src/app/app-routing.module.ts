@@ -7,6 +7,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { AuthGuard } from './core/auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
+import { DialogDataComponent } from './dialog-data/dialog-data.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
@@ -14,8 +15,10 @@ const routes: Routes = [
   { path: 'sign-in', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'post/new', component: PostComponent, canActivate: [AuthGuard] },
   { path: 'post/:id', component: PostComponent, canActivate: [AuthGuard] },
+  { path: 'dialogData', component: DialogDataComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

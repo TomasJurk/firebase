@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../_services/post.service';
-import { UserService } from '../_services/user.service';
+import { MatDialog } from '@angular/material';
+import { DialogDataComponent } from '../dialog-data/dialog-data.component';
 
 
 @Component({
@@ -11,17 +12,24 @@ import { UserService } from '../_services/user.service';
 export class DashboardComponent implements OnInit {
 
   posts: any;
-  id: string;
   constructor(
     private _pS: PostService,
-    private _uS: UserService
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this._uS.getProfileInfo().subscribe(user => {
-      if (user) {
-        this.id = user.uid
-        this.posts = this._pS.getAllPosts(this.id).valueChanges();
+    this.posts = this._pS.getAllPosts();
+  }
+
+  openDialog(post) {
+    this.dialog.open(DialogDataComponent, {
+      data: {
+        description: post.description,
+        imgUrl: post.photoURL,
+        imgName: post.imageName,
+        postId: post.id,
+        userId: post.user_uid,
+        user: post.user
       }
     });
   }

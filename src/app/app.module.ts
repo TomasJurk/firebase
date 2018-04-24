@@ -20,6 +20,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // Services
 import { AuthService } from './core/auth.service';
@@ -35,6 +36,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ProfileComponent } from './profile/profile.component';
 import { PostComponent } from './post/post.component';
+import { DialogDataComponent } from './dialog-data/dialog-data.component';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import { PostComponent } from './post/post.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    PostComponent
+    PostComponent,
+    DialogDataComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +67,8 @@ import { PostComponent } from './post/post.component';
     AngularFirestoreModule,
     AngularFireAuthModule,
     MatTabsModule,
-    MatStepperModule
+    MatStepperModule,
+    MatDialogModule
 
   ],
   providers: [AuthService, AuthGuard, PostService, UserService],

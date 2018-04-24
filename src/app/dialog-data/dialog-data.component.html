@@ -1,0 +1,20 @@
+<div class="dialog-container">
+    <p>{{data.description}}</p>
+    <img src="{{data.imgUrl}}" alt="">
+    <div class="like-btn-container">
+      <button (click)="likeSend()" class="like-btn" mat-button>
+        <i class="material-icons">favorite</i>
+      </button>
+      <span *ngIf="!allLikes">0</span>
+      <span *ngIf="allLikes">{{ allLikes }}</span>
+    </div>
+  <div class="comment-container">
+    <input [(ngModel)]="commText" type="text">
+    <button *ngIf="commText" (click)="commentSend()" mat-button>Add comment</button>
+  </div>
+  <div *ngFor="let comment of allComments | async">
+    <p><span>{{ comment.userName }}: </span>{{ comment.comment }}</p>
+
+  </div>
+</div>
+

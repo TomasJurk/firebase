@@ -6,7 +6,7 @@
     <mat-icon [routerLink]="['post', 'new']" class="a-icon" *ngIf="(auth.user | async)">add</mat-icon>
     <mat-icon [routerLink]="['sign-in']" class="a-icon" *ngIf="!(auth.user | async)">fingerprint</mat-icon>
     <mat-icon [routerLink]="['sign-up']" class="a-icon" *ngIf="!(auth.user | async)">motorcycle</mat-icon>
-    <span routerLink="profile" *ngIf="(auth.user | async)" >{{(auth.user | async)?.displayName}}</span>
+    <span [routerLink]="['profile', (auth.user | async)?.uid]" *ngIf="(auth.user | async)" >{{(auth.user | async)?.displayName}}</span>
     <mat-icon (click)="signOut()" class="a-icon" *ngIf="(auth.user | async)">power_settings_new</mat-icon>
   </mat-toolbar-row>
 </mat-toolbar>

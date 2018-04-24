@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../_services/user.service';
+import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,14 +12,26 @@ export class ProfileComponent implements OnInit {
 
   user: any;
   editable = false;
+  id: string;
+  myAccound = false;
   constructor(
-    private _uS: UserService
+    private _uS: UserService,
+    private aR: ActivatedRoute,
+    public auth: AuthService
   ) { }
 
   ngOnInit() {
-    this._uS.getProfileInfo().subscribe(
-      user => this.user = user
-    );
+    this.id = this.aR.snapshot.params['id'];
+
+    if (!this.id) {
+      this._uS.getProfileInfo().subscribe(
+        user => this.user = user
+      );
+    } else {
+      this._uS.getProfile(this.id).valueChanges().subscribe(
+        user => this.user = user
+      );
+    }
   }
 
   toggleName() {

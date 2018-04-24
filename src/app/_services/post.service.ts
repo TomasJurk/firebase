@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import { AuthService } from '../core/auth.service';
+import { UserService } from '../_services/user.service';
 import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { post } from 'selenium-webdriver/http';
 
 @Injectable()
 export class PostService {
 
   constructor(
     private _aS: AuthService,
+    private _uS: UserService,
     private afs: AngularFirestore
   ) { }
 
@@ -72,11 +75,53 @@ export class PostService {
     return this.getOnePost(id).update({'description': description});
   }
 
+  addComment(id, user_id, comment_text, name) {
+    const comment = {
+      'posted_on': new Date().getTime(),
+      'post_id': id,
+      'user_id': user_id,
+      'userName': name,
+      'comment': comment_text
+    };
+    return this.afs.collection('comments').add(comment);
+  }
+
+  getAllComments(post_id) {
+    return this.afs.collection('comments', ref => ref.where('post_id', '==', `${post_id}`).orderBy('posted_on', 'desc'));
+  }
+
+  addLike(id, user_id) {
+    const like = {
+      'liked_on': new Date().getTime(),
+      'post_id': id,
+      'user_id': user_id
+    };
+    return this.afs.collection('likes').add(like);
+  }
+
+  getAllLikes(post_id) {
+    return this.afs.collection('likes', ref => ref.where('post_id', '==', `${post_id}`).orderBy('liked_on', 'desc'));
+  }
+
   addPost(id) {
     return this.getOnePost(id).update({'status': 'active'});
   }
 
-  getAllPosts(id) {
-    return this.afs.collection('posts', ref => ref.where('status', '==', 'active').where('user_uid', '==', `${id}`));
+  getAllPosts() {
+    return this.afs.collection('posts', ref => ref.where('status', '==', 'active').orderBy('imageName', 'desc'))
+    .snapshotChanges().map((posts) => {
+      return posts.map(r => {
+        const data = r.payload.doc.data();
+        const user = this._uS.getProfile(data.user_uid).valueChanges();
+        return {
+          id: r.payload.doc.id,
+          user_uid: data.user_uid,
+          photoURL: data.photoURL,
+          imgName: data.imageName,
+          description: data.description,
+          user: user
+        };
+      });
+    });
   }
 }

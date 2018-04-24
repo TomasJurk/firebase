@@ -65,5 +65,6 @@ export class PostComponent implements OnInit {
 
   addPost() {
     this._pS.addPost(this.id);
+    this.router.navigate(['dashboard']);
   }
 }
