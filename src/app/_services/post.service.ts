@@ -101,6 +101,15 @@ export class PostService {
 
   getAllLikes(post_id) {
     return this.afs.collection('likes', ref => ref.where('post_id', '==', `${post_id}`).orderBy('liked_on', 'desc'));
+
+  }
+  getIfLikes(post_id, user_id) {
+    return this.afs.collection('likes', ref => ref.where('post_id', '==', `${post_id}`)
+    .where('user_id', '==', `${user_id}`));
+  }
+
+  deleteLike(like_id) {
+    return this.afs.doc(`likes/${like_id}`).delete();
   }
 
   addPost(id) {

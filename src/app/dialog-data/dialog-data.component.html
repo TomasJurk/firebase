@@ -3,7 +3,8 @@
     <img src="{{data.imgUrl}}" alt="">
     <div class="like-btn-container">
       <button (click)="likeSend()" class="like-btn" mat-button>
-        <i class="material-icons">favorite</i>
+        <i *ngIf="isLiked" class="material-icons">favorite</i>
+        <i *ngIf="!isLiked" class="material-icons">favorite_border</i>
       </button>
       <span *ngIf="!allLikes">0</span>
       <span *ngIf="allLikes">{{ allLikes }}</span>
